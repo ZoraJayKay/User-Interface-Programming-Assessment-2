@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,22 +8,44 @@ using UnityEngine.UI;
 
 public class SettingsUI : MonoBehaviour
 {
-    public Slider musicVolumeSlider;
-    public Slider soundFxVolumeSlider;
+    // +++++++++ IMPLEMENTATION WITH FloatEditor OBJECTS +++++++++
+    public FloatEditor musicVolume;
+    public FloatEditor fxVolume;
+
+    // ********* IMPLEMENTATION WITH SLIDER OBJECTS ********* 
+    //public Slider musicVolumeSlider;
+    //public Slider soundFxVolumeSlider;
+
+
 
     // A settings object from which to obtain back-end music and FX values
     public Settings settings;
 
-    // Assign the sliders values from the back-end Settings object
 
-
-    // When the sliders move, write to the back-end variables
-
-    public void Start()
+    private void Start()
     {
+        if (musicVolume)
+        {
+            musicVolume.floatValue = settings.musicVolume;
+            musicVolume.onValueChanged.AddListener((float value) =>
+            {
+                settings.musicVolume = value;
+            });
+        }
+
+        if (fxVolume)
+        {
+            fxVolume.floatValue = settings.soundFxVolume;
+            fxVolume.onValueChanged.AddListener((float value) =>
+            {
+                settings.soundFxVolume = value;
+            });
+        }
+
+        // ********* IMPLEMENTATION WITH SLIDER OBJECTS ********* 
         // Add an event listener that listens for the OnMusicVolumeChanged function
-        musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
-        musicVolumeSlider.onValueChanged.AddListener(OnFxVolumeChanged);
+        //musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+        //soundFxVolumeSlider.onValueChanged.AddListener(OnFxVolumeChanged);
 
         //// Alternatively, add a C# lambda function for the same effect
         //musicVolumeSlider.onValueChanged.AddListener(

@@ -12,4 +12,9 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
